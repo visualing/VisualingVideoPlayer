@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
@@ -147,6 +148,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         this.currentScreen = screen;
         this.headData = null;
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+    }
+
+    public void setUp(Uri uri, int screen, Object... objects) {
+
     }
 
     @Override
@@ -716,7 +721,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public int getCurrentPositionWhenPlaying() {
         int position = 0;
-        if (JCMediaManager.instance().mediaPlayer == null) return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
+        if (JCMediaManager.instance().mediaPlayer == null)
+            return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
         if (currentState == CURRENT_STATE_PLAYING ||
                 currentState == CURRENT_STATE_PAUSE ||
                 currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
