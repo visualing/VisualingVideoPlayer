@@ -1,5 +1,6 @@
 package cn.jzvd;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
@@ -155,7 +156,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static void startFullscreen(Context context, Class _class, LinkedHashMap urlMap, int defaultUrlMapIndex, Object... objects) {
         hideSupportActionBar(context);
         JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
-        ViewGroup vp = (JZUtils.scanForActivity(context))//.getWindow().getDecorView();
+        ViewGroup vp = (ViewGroup) (JZUtils.scanForActivity(context))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(JZVideoPlayer.FULLSCREEN_ID);
         if (old != null) {
@@ -168,8 +169,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jzVideoPlayer, lp);
-//            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
-//            jzVideoPlayer.setAnimation(ra);
+            //            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
+            //            jzVideoPlayer.setAnimation(ra);
             jzVideoPlayer.setUp(urlMap, defaultUrlMapIndex, JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             jzVideoPlayer.startButton.performClick();
@@ -206,6 +207,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         return false;
     }
 
+    @SuppressLint("RestrictedApi")
     public static void showSupportActionBar(Context context) {
         if (ACTION_BAR_EXIST && JZUtils.getAppCompActivity(context) != null) {
             ActionBar ab = JZUtils.getAppCompActivity(context).getSupportActionBar();
@@ -219,6 +221,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
+    @SuppressLint("RestrictedApi")
     public static void hideSupportActionBar(Context context) {
         if (ACTION_BAR_EXIST && JZUtils.getAppCompActivity(context) != null) {
             ActionBar ab = JZUtils.getAppCompActivity(context).getSupportActionBar();
@@ -263,14 +266,14 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void init(Context context) {
         View.inflate(context, getLayoutId(), this);
-        startButton = findViewById(R.id.start);
-        fullscreenButton = findViewById(R.id.fullscreen);
-        progressBar = findViewById(R.id.bottom_seek_progress);
-        currentTimeTextView = findViewById(R.id.current);
-        totalTimeTextView = findViewById(R.id.total);
-        bottomContainer = findViewById(R.id.layout_bottom);
-        textureViewContainer = findViewById(R.id.surface_container);
-        topContainer = findViewById(R.id.layout_top);
+        startButton = (ImageView) findViewById(R.id.start);
+        fullscreenButton = (ImageView) findViewById(R.id.fullscreen);
+        progressBar = (SeekBar) findViewById(R.id.bottom_seek_progress);
+        currentTimeTextView = (TextView) findViewById(R.id.current);
+        totalTimeTextView = (TextView) findViewById(R.id.total);
+        bottomContainer = (ViewGroup) findViewById(R.id.layout_bottom);
+        textureViewContainer = (ViewGroup) findViewById(R.id.surface_container);
+        topContainer = (ViewGroup) findViewById(R.id.layout_top);
 
         startButton.setOnClickListener(this);
         fullscreenButton.setOnClickListener(this);
@@ -346,7 +349,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             }
         } else if (i == R.id.fullscreen) {
             Log.i(TAG, "onClick fullscreen [" + this.hashCode() + "] ");
-            if (currentState == CURRENT_STATE_AUTO_COMPLETE) return;
+            if (currentState == CURRENT_STATE_AUTO_COMPLETE)
+                return;
             if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 //quit fullscreen
                 backPress();
@@ -454,7 +458,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                         //dialog中显示百分比
                         int brightnessPercent = (int) (mGestureDownBrightness * 100 / 255 + deltaY * 3 * 100 / mScreenHeight);
                         showBrightnessDialog(brightnessPercent);
-//                        mDownY = y;
+                        //                        mDownY = y;
                     }
                     break;
                 case MotionEvent.ACTION_UP:
@@ -623,7 +627,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-            if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) return;
+            if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START)
+                return;
             BACKUP_PLAYING_BUFFERING_STATE = currentState;
             onStatePlaybackBufferingStart();
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
@@ -752,7 +757,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void clearFullscreenLayout() {
-        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+        ViewGroup vp = (ViewGroup) (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         View oldF = vp.findViewById(FULLSCREEN_ID);
         View oldT = vp.findViewById(TINY_ID);
@@ -770,7 +775,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         showSupportActionBar(getContext());
         JZVideoPlayer currJzvd = JZVideoPlayerManager.getCurrentJzvd();
         currJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
-        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+        ViewGroup vp = (ViewGroup) (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         vp.removeView(currJzvd);
         JZVideoPlayerManager.setSecondFloor(null);
@@ -802,14 +807,17 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void setProgressAndText(int progress, int position, int duration) {
         Log.i(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
-            if (progress != 0) progressBar.setProgress(progress);
+            if (progress != 0)
+                progressBar.setProgress(progress);
         }
-        if (position != 0) currentTimeTextView.setText(JZUtils.stringForTime(position));
+        if (position != 0)
+            currentTimeTextView.setText(JZUtils.stringForTime(position));
         totalTimeTextView.setText(JZUtils.stringForTime(duration));
     }
 
     public void setBufferProgress(int bufferProgress) {
-        if (bufferProgress != 0) progressBar.setSecondaryProgress(bufferProgress);
+        if (bufferProgress != 0)
+            progressBar.setSecondaryProgress(bufferProgress);
     }
 
     public void resetProgressAndTime() {
@@ -838,7 +846,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public int getDuration() {
         int duration = 0;
-        if (JZMediaManager.instance().mediaPlayer == null) return duration;
+        if (JZMediaManager.instance().mediaPlayer == null)
+            return duration;
         try {
             duration = JZMediaManager.instance().mediaPlayer.getDuration();
         } catch (IllegalStateException e) {
@@ -870,7 +879,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             vpup = vpup.getParent();
         }
         if (currentState != CURRENT_STATE_PLAYING &&
-                currentState != CURRENT_STATE_PAUSE) return;
+                currentState != CURRENT_STATE_PAUSE)
+            return;
         int time = seekBar.getProgress() * getDuration() / 100;
         JZMediaManager.instance().mediaPlayer.seekTo(time);
         Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
@@ -885,7 +895,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         hideSupportActionBar(getContext());
         JZUtils.setRequestedOrientation(getContext(), FULLSCREEN_ORIENTATION);
 
-        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+        ViewGroup vp = (ViewGroup) (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(FULLSCREEN_ID);
         if (old != null) {
@@ -903,8 +913,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             jzVideoPlayer.setState(currentState);
             jzVideoPlayer.addTextureView();
             JZVideoPlayerManager.setSecondFloor(jzVideoPlayer);
-//            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
-//            jzVideoPlayer.setAnimation(ra);
+            //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
+            //            jzVideoPlayer.setAnimation(ra);
             onStateNormal();
             jzVideoPlayer.progressBar.setSecondaryProgress(progressBar.getSecondaryProgress());
             jzVideoPlayer.startProgressTimer();
@@ -917,8 +927,9 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void startWindowTiny() {
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
         onEvent(JZUserAction.ON_ENTER_TINYSCREEN);
-        if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR) return;
-        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+        if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR)
+            return;
+        ViewGroup vp = (ViewGroup) (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(TINY_ID);
         if (old != null) {
@@ -1056,7 +1067,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         @Override
         public void run() {
             if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE || currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
-//                Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
+                //                Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
