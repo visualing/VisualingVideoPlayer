@@ -720,6 +720,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         loadingProgressBar.setVisibility(loadingPro);
         if (thumbAllowDismiss) {
             thumbImageView.setVisibility(View.VISIBLE);
+            topContainer.setVisibility(INVISIBLE);
         } else {
             thumbImageView.setVisibility(thumbImg);
         }
