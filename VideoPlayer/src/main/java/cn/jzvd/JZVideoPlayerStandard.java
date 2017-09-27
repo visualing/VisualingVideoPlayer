@@ -43,7 +43,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
-    public ImageView thumbImageView;
+    public com.facebook.drawee.view.SimpleDraweeView thumbImageView;
     public ImageView tinyBackImageView;
     public LinearLayout batteryTimeLayout;
     public ImageView battery_level;
@@ -108,7 +108,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progress);
         titleTextView = (TextView) findViewById(R.id.title);
         backButton = (ImageView) findViewById(R.id.back);
-        thumbImageView = (ImageView) findViewById(R.id.thumb);
+        thumbImageView = (com.facebook.drawee.view.SimpleDraweeView) findViewById(R.id.thumb);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
         battery_level = (ImageView) findViewById(R.id.battery_level);
