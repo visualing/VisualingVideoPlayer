@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.jzvd.demo">
+    package="cn.visualing.demo">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
-        android:name=".DemoApplication"
+        android:name="cn.visualing.demo.DemoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="cn.visualing.demo.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -24,65 +24,65 @@
         </activity>
 
         <activity
-            android:name=".PlayDirectlyActivity"
+            android:name="cn.visualing.demo.PlayDirectlyActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ListViewActivity"
+            android:name="cn.visualing.demo.ListViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListViewNormalActivity"
+            android:name="cn.visualing.demo.ListViewNormalActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListViewViewpagerActivity"
+            android:name="cn.visualing.demo.ListViewViewpagerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListViewMultiHolderActivity"
+            android:name="cn.visualing.demo.ListViewMultiHolderActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ApiActivity"
+            android:name="cn.visualing.demo.ApiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UISmallChangeActivity"
+            android:name="cn.visualing.demo.UISmallChangeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UIBigChangeActivity"
+            android:name="cn.visualing.demo.UIBigChangeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RecyclerViewNormalActivity"
+            android:name="cn.visualing.demo.RecyclerViewNormalActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AutoTinyActivity"
+            android:name="cn.visualing.demo.AutoTinyActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AutoTinyListActivity"
+            android:name="cn.visualing.demo.AutoTinyListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AutoTinyNormalActivity"
+            android:name="cn.visualing.demo.AutoTinyNormalActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".WebViewActivity"
+            android:name="cn.visualing.demo.WebViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrientationActivity"
+            android:name="cn.visualing.demo.OrientationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ExtendsNormalActivity"
+            android:name="cn.visualing.demo.ExtendsNormalActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
     </application>
