@@ -25,6 +25,19 @@
         android:background="#000000"
         android:scaleType="fitCenter" />
 
+    <View
+        android:id="@+id/thumbMasked"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#30000000"
+        android:scaleType="fitCenter" />
+
     <LinearLayout
         android:id="@+id/layout_bottom"
         android:layout_width="match_parent"

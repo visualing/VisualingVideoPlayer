@@ -37,13 +37,14 @@ import java.util.TimerTask;
  * On 2016/04/18 16:15
  */
 public class JZVideoPlayerStandard extends JZVideoPlayer {
-
     protected static Timer DISMISS_CONTROL_VIEW_TIMER;
 
     public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
     public com.facebook.drawee.view.SimpleDraweeView thumbImageView;
+    public View thumbMasked;
+
     public ImageView tinyBackImageView;
     public LinearLayout batteryTimeLayout;
     public ImageView battery_level;
@@ -108,6 +109,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         titleTextView = (TextView) findViewById(R.id.title);
         backButton = (ImageView) findViewById(R.id.back);
         thumbImageView = (com.facebook.drawee.view.SimpleDraweeView) findViewById(R.id.thumb);
+        thumbMasked = findViewById(R.id.thumbMasked);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
         battery_level = (ImageView) findViewById(R.id.battery_level);
@@ -123,7 +125,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
 
     public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
         super.setUp(urlMap, defaultUrlMapIndex, screen, objects);
-        if (objects.length == 0) return;
+        if (objects.length == 0)
+            return;
         titleTextView.setText(objects[0].toString());
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             fullscreenButton.setImageResource(R.drawable.jz_shrink);
@@ -459,13 +462,15 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     @Override
     public void setProgressAndText(int progress, int position, int duration) {
         super.setProgressAndText(progress, position, duration);
-        if (progress != 0) bottomProgressBar.setProgress(progress);
+        if (progress != 0)
+            bottomProgressBar.setProgress(progress);
     }
 
     @Override
     public void setBufferProgress(int bufferProgress) {
         super.setBufferProgress(bufferProgress);
-        if (bufferProgress != 0) bottomProgressBar.setSecondaryProgress(bufferProgress);
+        if (bufferProgress != 0)
+            bottomProgressBar.setSecondaryProgress(bufferProgress);
     }
 
     @Override
@@ -713,9 +718,20 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
         loadingProgressBar.setVisibility(loadingPro);
-        thumbImageView.setVisibility(thumbImg);
+        if (thumbAllowDismiss) {
+            thumbImageView.setVisibility(View.VISIBLE);
+        } else {
+            thumbImageView.setVisibility(thumbImg);
+        }
+        thumbMasked.setVisibility(thumbImg);
         bottomProgressBar.setVisibility(bottomPro);
     }
+
+    public void setThumbAllowDismiss(boolean thumbAllowDismiss) {
+        this.thumbAllowDismiss = thumbAllowDismiss;
+    }
+
+    boolean thumbAllowDismiss = false;
 
     public void updateStartImage() {
         if (currentState == CURRENT_STATE_PLAYING) {
