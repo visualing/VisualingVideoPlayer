@@ -282,9 +282,12 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 startVideo();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
-            } else if (currentState == CURRENT_STATE_PLAYING) {
-                goOnPlayOnPause();
             }
+            if (currentState == CURRENT_STATE_PLAYING) {
+                //                goOnPlayOnPause();
+                changeUiToPlayingShow();
+            }
+
         } else if (i == R.id.surface_container) {
             startDismissControlViewTimer();
         } else if (i == R.id.back) {
@@ -739,8 +742,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public void updateStartImage() {
         if (currentState == CURRENT_STATE_PLAYING) {
             startButton.setImageResource(R.drawable.jz_click_pause_selector);
-            retryTextView.setVisibility(VISIBLE);
-            retryTextView.setText(getTipText());
+            retryTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_ERROR) {
             startButton.setImageResource(R.drawable.jz_click_error_selector);
             retryTextView.setVisibility(INVISIBLE);
@@ -748,10 +750,12 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             startButton.setImageResource(R.drawable.jz_click_replay_selector);
             retryTextView.setVisibility(VISIBLE);
             retryTextView.setText(retryTextView.getContext().getResources().getString(R.string.replay));
-        } else {
+        } else if (currentState == CURRENT_STATE_PAUSE) {
             startButton.setImageResource(R.drawable.jz_click_play_selector);
             retryTextView.setVisibility(VISIBLE);
-            retryTextView.setText(getTipText());
+        } else {
+            startButton.setImageResource(R.drawable.jz_click_play_selector);
+            retryTextView.setVisibility(INVISIBLE);
         }
     }
 
