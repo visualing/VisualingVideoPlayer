@@ -284,10 +284,10 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 onClickUiToggle();
             }
             if (currentState == CURRENT_STATE_PLAYING) {
-                //                goOnPlayOnPause();
+//                goOnPlayOnPause();
                 changeUiToPlayingShow();
             }
-
+            
         } else if (i == R.id.surface_container) {
             startDismissControlViewTimer();
         } else if (i == R.id.back) {
