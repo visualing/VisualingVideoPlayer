@@ -282,6 +282,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 startVideo();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
+            } else if (currentState == CURRENT_STATE_PLAYING) {
+                goOnPlayOnPause();
             }
         } else if (i == R.id.surface_container) {
             startDismissControlViewTimer();
@@ -737,17 +739,49 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public void updateStartImage() {
         if (currentState == CURRENT_STATE_PLAYING) {
             startButton.setImageResource(R.drawable.jz_click_pause_selector);
-            retryTextView.setVisibility(INVISIBLE);
+            retryTextView.setVisibility(VISIBLE);
+            retryTextView.setText(getTipText());
         } else if (currentState == CURRENT_STATE_ERROR) {
             startButton.setImageResource(R.drawable.jz_click_error_selector);
             retryTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
             startButton.setImageResource(R.drawable.jz_click_replay_selector);
             retryTextView.setVisibility(VISIBLE);
+            retryTextView.setText(retryTextView.getContext().getResources().getString(R.string.replay));
         } else {
             startButton.setImageResource(R.drawable.jz_click_play_selector);
-            retryTextView.setVisibility(INVISIBLE);
+            retryTextView.setVisibility(VISIBLE);
+            retryTextView.setText(getTipText());
         }
+    }
+
+    public String getTipText() {
+        int current = getCurrentPositionWhenPlaying();
+        int duration = getDuration();
+        return getMinDesc(current) + "/" + getMinDesc(duration);
+    }
+
+    public static String getMinDesc(int ms) {
+        int miao = ms / 1000;
+        if (miao == 0) {
+            return "00:00";
+        }
+        int fen = miao / 60;
+        int fenmiao = miao % 60;
+
+        String value = "";
+        if (fen >= 10) {
+            value += fen + ":";
+        } else {
+            value += "0" + fen + ":";
+        }
+
+        if (fenmiao >= 10) {
+            value += fenmiao;
+        } else {
+            value += "0" + fenmiao;
+        }
+        return value;
     }
 
     @Override
