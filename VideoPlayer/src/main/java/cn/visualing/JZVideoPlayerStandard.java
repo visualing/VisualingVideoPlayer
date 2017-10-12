@@ -748,11 +748,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             retryTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
             startButton.setImageResource(R.drawable.jz_click_replay_selector);
-            retryTextView.setVisibility(VISIBLE);
+            retryTextView.setVisibility(INVISIBLE);
             retryTextView.setText(retryTextView.getContext().getResources().getString(R.string.replay));
         } else if (currentState == CURRENT_STATE_PAUSE) {
             startButton.setImageResource(R.drawable.jz_click_play_selector);
-            retryTextView.setVisibility(VISIBLE);
+            retryTextView.setVisibility(INVISIBLE);
         } else {
             startButton.setImageResource(R.drawable.jz_click_play_selector);
             retryTextView.setVisibility(INVISIBLE);
